@@ -38,44 +38,15 @@ const teamMembers = [
 
 ];
 
-// console.log(teamMembers);
-
-
-
 const containerCards = document.querySelector('.team-container');
 
-
-for (let i = 0; i < teamMembers.length; i++) {
-
-
-    const members = teamMembers[i];
-    const card = `
-    <div class="team-card">
-        <div class="card-image">
-            <img src="img/${members.photo}"alt=""/>
-        </div>
-        <div class="card-text">
-            <h3>${members.name}</h3>
-            <p>${members.role}</p>
-        </div>
-    </div>`;
-
-    containerCards.innerHTML += card;
-
-}
-
-//--------------------------------
-// BONUS
-//--------------------------------
-
+const inputName = document.querySelector('#name');
+const inputRole = document.querySelector('#role');
+const inputPhoto = document.querySelector('#image');
 
 const addBtn = document.querySelector('#addMemberButton');
 
 addBtn.addEventListener('click', function () {
-
-    const inputName = document.querySelector('#name');
-    const inputRole = document.querySelector('#role');
-    const inputPhoto = document.querySelector('#image');
 
     const name = inputName.value;
     const role = inputRole.value;
@@ -94,17 +65,44 @@ addBtn.addEventListener('click', function () {
 
     teamMembers.push(newMember);
 
+    const card = drawCard(newMember);
+
+    containerCards.innerHTML += card;
+});
+
+drawAllCards(teamMembers);
+
+
+//--------------------------
+// Function
+//--------------------------
+
+
+
+function drawCard({ photo, name, role }) {
+
     const card = `
      <div class="team-card">
          <div class="card-image">
-             <img src="img/${newMember.photo}"alt=""/>
+             <img src="img/${photo}"alt=""/>
          </div>
          <div class="card-text">
-             <h3>${newMember.name}</h3>
-             <p>${newMember.role}</p>
+             <h3>${name}</h3>
+             <p>${role}</p>
          </div>
      </div>`;
 
-    containerCards.innerHTML += card;
-    console.log(newMember);
-});
+    return card
+}
+
+function drawAllCards() {
+
+    for (let i = 0; i < teamMembers.length; i++) {
+
+        const member = teamMembers[i];
+
+        const card = drawCard(member);
+
+        containerCards.innerHTML += card;
+    }
+}
